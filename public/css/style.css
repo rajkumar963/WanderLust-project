@@ -1,0 +1,56 @@
+/* body{
+    background-color: pink;
+} */
+
+.navbar{
+    height: 4.5rem;
+    background-color: white !important;
+    border-bottom: 1px solid #e6e6e6;
+
+}
+.fa-compass{
+    font-size: 2rem;
+    color: #fe424d;
+}
+.nav-link{
+    color: #222222 !important;
+}
+
+/* footer */
+
+.f-info-links a{
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover{
+    color: #fe424d;
+    text-decoration: underline;
+}
+.f-info-links,.f-info-socials,.f-info-brand {
+    width: 100%;
+    vertical-align: middle;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-info-socials a i{
+   margin-right: 1rem;
+   font-size: 1.3rem;
+}
+.f-info-socials a{
+    color: #222222;
+}
+
+.f-info{
+    text-align: center;
+    height: 5rem;
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    font-size: 1rem;
+   
+}
