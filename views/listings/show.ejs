@@ -40,11 +40,16 @@
         <hr>
 
         <h4>All Reviews</h4>
-        <ul>
-            <% for(review of listing.reviews){ %>
-            <li><% review.rating %> stars,<%= review.comment%></li>
+            <ul>
+            <% if (Array.isArray(listing.reviews)) { %>
+                <% for (let review of listing.reviews) { %>
+                <li><%= review.rating %> stars, <%= review.comment %></li>
+                <% } %>
+            <% } else { %>
+                <li>No reviews yet</li>
             <% } %>
-        </ul>
+            </ul>
+
     </div>
     
 </div>

@@ -116,18 +116,38 @@ app.delete("/listing/:id",wrapAsync(async(req,res)=>{
 }));
 
 //Review Method:- Creating POST Route
-app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
- let listing = await Listing.findById(req.params.id);
- let newReview= new Review(req.body.review);
 
- listing.reviews.push(newReview);
- await newReview.save();
- await listing.save();
-console.log("new review saved");
-res.send("new review saved");
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+    let listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      throw new ExpressError("Listing not found", 404);
+    }
+  
+    const { rating, comment } = req.body; // Assuming comment is in req.body directly
+    let newReview = new Review({ rating, comment });
+  
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    console.log("New review saved");
+    res.redirect(`/listings/${listing._id}`);
+  }));
+  
+  
 
-res.redirect(`/listings/${listing._id}`);
-}));
+
+// app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
+//  let listing = await Listing.findById(req.params.id);
+//  let newReview= new Review(req.body.review);
+
+//  listing.reviews.push(newReview);
+//  await newReview.save();
+//  await listing.save();
+// console.log("new review saved");
+// res.send("new review saved");
+
+// res.redirect(`/listings/${listing._id}`);
+// }));
 
 
 // app.get("/testListing", async(req,res)=>{
