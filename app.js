@@ -117,25 +117,19 @@ app.delete("/listing/:id",wrapAsync(async(req,res)=>{
 
 //Review Method:- Creating POST Route
 
-app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
     let listing = await Listing.findById(req.params.id);
-    if (!listing) {
-      throw new ExpressError("Listing not found", 404);
-    }
-  
-    const { rating, comment } = req.body; // Assuming comment is in req.body directly
-    let newReview = new Review({ rating, comment });
-  
+    let newReview= new Review(req.body.review);
+
     listing.reviews.push(newReview);
     await newReview.save();
     await listing.save();
-    console.log("New review saved");
-    res.redirect(`/listings/${listing._id}`);
-  }));
+   console.log("new review saved");
+   res.redirect(`/listings/${listing._id}`);
+    
+}));
   
   
-
-
 // app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
 //  let listing = await Listing.findById(req.params.id);
 //  let newReview= new Review(req.body.review);
@@ -148,7 +142,15 @@ app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => 
 
 // res.redirect(`/listings/${listing._id}`);
 // }));
+   
 
+//Delete route for reviews
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+    let {id,reviewId}=req.params;
+    let deletedReview=await Review.findByIdAndDelete(reviewId);
+    let listing=await Listing.findByIdAndUpdate(id, {$pull:{reviews:reviewId}});
+    res.redirect(`/listings/${id}`);
+}))
 
 // app.get("/testListing", async(req,res)=>{
 //     let sampleListing=new Listing({
